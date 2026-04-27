@@ -25,6 +25,13 @@ const db = mysql.createConnection({
   database: process.env.MYSQLDATABASE,
   port: process.env.MYSQLPORT
 });
+db.connect((err) => {
+  if (err) {
+    console.log("❌ DB ERROR:", err);
+  } else {
+    console.log("✅ MySQL Connected");
+  }
+});
 
 // ================= REGISTER =================
 app.post('/register', async (req, res) => {
@@ -236,7 +243,18 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// ================= DATABASE CONNECT =================
+db.connect((err) => {
+  if (err) {
+    console.log("❌ DB ERROR:", err);
+  } else {
+    console.log("✅ MySQL Connected");
+  }
+});
+
 // ================= SERVER =================
-app.listen(3000, () => {
-  console.log('🚀 Server jalan di: http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log('🚀 Server jalan di port:', PORT);
 });
