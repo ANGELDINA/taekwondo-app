@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>List Atlet</title>
+</head>
+<body>
+
+<h2>Data Atlet</h2>
+
+<table border="1" id="tabel">
+  <thead>
+    <tr>
+      <th>Dojang</th>
+      <th>Nama</th>
+      <th>NIK</th>
+      <th>Tgl Lahir</th>
+      <th>Event</th>
+      <th>Cabang</th>
+      <th>Level</th>
+      <th>Jenis</th>
+      <th>Kelas</th>
+      <th>Provinsi</th>
+      <th>Kota</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadData() {
+  const res = await fetch('/data-atlet');
+  const data = await res.json();
+
+  const tbody = document.querySelector('#tabel tbody');
+  tbody.innerHTML = '';
+
+  data.forEach(a => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${a.nama_dojang}</td>
+        <td>${a.nama_lengkap}</td>
+        <td>${a.nik || '-'}</td>
+        <td>${a.tanggal_lahir || '-'}</td>
+        <td>${a.kategori}</td>
+        <td>${a.jenis_tanding}</td>
+        <td>${a.sub_kategori}</td>
+        <td>${a.jenis_kelamin}</td>
+        <td>${a.kelas}</td>
+        <td>${a.provinsi}</td>
+        <td>${a.kabupaten}</td>
+      </tr>
+    `;
+  });
+}
+
+loadData();
+</script>
+
+</body>
+</html>

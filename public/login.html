@@ -1,0 +1,28 @@
+<form id="form">
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button>Login</button>
+</form>
+
+<script>
+document.getElementById('form').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const res = await fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value
+    })
+  });
+
+  const r = await res.json();
+
+  if (r.message === 'Login berhasil ✅') {
+    window.location.href = '/dashboard.html';
+  } else {
+    alert(r.message);
+  }
+});
+</script>

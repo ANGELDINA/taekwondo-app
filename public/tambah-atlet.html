@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tambah Atlet</title>
+</head>
+<body>
+
+<h2>Tambah Atlet</h2>
+
+<form id="formAtlet">
+
+<input type="text" id="nama" placeholder="Nama Lengkap" required><br><br>
+<input type="text" id="nik" placeholder="NIK"><br><br>
+
+<input type="text" id="tempat_lahir" placeholder="Tempat Lahir"><br><br>
+<input type="date" id="tanggal_lahir"><br><br>
+
+<input type="number" id="tinggi" placeholder="Tinggi Badan (cm)"><br><br>
+<input type="number" id="berat" placeholder="Berat Badan (kg)"><br><br>
+
+<select id="jenis_kelamin">
+  <option value="">-- Jenis Kelamin --</option>
+  <option value="Putra">Putra</option>
+  <option value="Putri">Putri</option>
+</select><br><br>
+
+<!-- ================= KATEGORI ================= -->
+
+<h3>Event</h3>
+<select id="event"></select><br><br>
+
+<h3>Cabang</h3>
+<select id="cabang"></select><br><br>
+
+<h3>Level</h3>
+<select id="level"></select><br><br>
+
+<h3>Jenis</h3>
+<select id="jenis"></select><br><br>
+
+<h3>Kelas</h3>
+<select id="kelas"></select><br><br>
+
+<!-- ================= WILAYAH ================= -->
+
+<h3>Provinsi</h3>
+<select id="provinsi"></select><br><br>
+
+<h3>Kabupaten</h3>
+<select id="kabupaten"></select><br><br>
+
+<h3>Kecamatan</h3>
+<select id="kecamatan"></select><br><br>
+
+<input type="text" id="no_hp" placeholder="No HP"><br><br>
+<input type="text" id="pendidikan" placeholder="Pendidikan"><br><br>
+<input type="text" id="gol_darah" placeholder="Golongan Darah"><br><br>
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="text" id="no_hp_ortu" placeholder="No HP Orang Tua"><br><br>
+
+<button type="submit">Simpan Atlet</button>
+
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+console.log("🔥 JS AKTIF");
+
+//DATA KATEGORI
+const dataKategori = {
+
+  "Festival": {
+    "Kyorugi": {
+
+      "Pracadet A": {
+        "Putra": ["U16","U18","U20","U22","U24","U26","U28","U30","U32","O32"],
+        "Putri": ["U16","U18","U20","U22","U24","U26","U28","U30","U32","O32"]
+      },
+
+      "Pracadet B": {
+        "Putra": ["U18","20","22","24","26","28","30","32","34","O34"],
+        "Putri": ["U18","20","22","24","26","28","30","32","34","O34"]
+      },
+
+      "Pracadet C": {
+        "Putra": ["22","24","26","28","31","34","37","41","45","O45"],
+        "Putri": ["22","24","26","28","31","34","37","41","45","O45"]
+      },
+
+      "Cadet": {
+        "Putra": ["U33","37","41","45","49","53","57","61","65","O65"],
+        "Putri": ["U29","33","37","41","44","47","51","55","59","O59"]
+      },
+
+      "Junior": {
+        "Putra": ["U45","48","51","55","59","63","68","73","78","O78"],
+        "Putri": ["U42","44","46","49","52","55","59","63","68","O68"]
+      },
+
+      "Senior": {
+        "Putra": ["U54","58","63","68","74","80","87","O87"],
+        "Putri": ["U46","49","53","57","62","67","73","O73"]
+      }
+
+    },
+
+    "Poomsae": {
+      "Pracadet A": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] },
+      "Pracadet B": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] },
+      "Pracadet C": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] },
+      "Cadet": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] },
+      "Junior": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] },
+      "Senior": { "Putra": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"], "Putri": ["Geup 9-8","Geup 7-6","Geup 5-4","Geup 3-2","Dan"] }
+    }
+  },
+
+  "Semi Prestasi": {
+    "Kyorugi": {
+      "Junior": {
+        "Putra": ["U45","48","51","55","59"],
+        "Putri": ["U42","44","46","49","52"]
+      }
+    }
+  },
+
+  "Prestasi": {
+    "Kyorugi": {
+      "Senior": {
+        "Putra": ["U54","58","63","68","74","80","87","O87"],
+        "Putri": ["U46","49","53","57","62","67","73","O73"]
+      }
+    },
+
+    "Poomsae": {
+      "Cadet": {
+        "Putra": ["Single","Pair","Beregu"],
+        "Putri": ["Single","Pair","Beregu"]
+      },
+      "Junior": {
+        "Putra": ["Single","Pair","Beregu"],
+        "Putri": ["Single","Pair","Beregu"]
+      },
+      "Senior": {
+        "Putra": ["Single","Pair","Beregu"],
+        "Putri": ["Single","Pair","Beregu"]
+      }
+    }
+  }
+
+};
+
+// ================= HELPER =================
+function isiSelect(el, arr) {
+  if (!el) return;
+
+  el.innerHTML = '<option value="">-- pilih --</option>';
+
+  arr.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.appendChild(opt);
+  });
+}
+
+// ================= ELEMENT =================
+const eventSelect = document.getElementById('event');
+const cabang = document.getElementById('cabang');
+const level = document.getElementById('level');
+const jenis = document.getElementById('jenis');
+const kelas = document.getElementById('kelas');
+
+// INIT
+isiSelect(eventSelect, Object.keys(dataKategori));
+
+// CASCADE
+eventSelect.addEventListener('change', function () {
+  isiSelect(cabang, Object.keys(dataKategori[this.value] || {}));
+  level.innerHTML = jenis.innerHTML = kelas.innerHTML = '<option>-- pilih --</option>';
+});
+
+cabang.addEventListener('change', function () {
+  isiSelect(level, Object.keys(dataKategori[eventSelect.value]?.[this.value] || {}));
+  jenis.innerHTML = kelas.innerHTML = '<option>-- pilih --</option>';
+});
+
+level.addEventListener('change', function () {
+  isiSelect(jenis, Object.keys(dataKategori[eventSelect.value]?.[cabang.value]?.[this.value] || {}));
+  kelas.innerHTML = '<option>-- pilih --</option>';
+});
+
+jenis.addEventListener('change', function () {
+  isiSelect(kelas, dataKategori[eventSelect.value]?.[cabang.value]?.[level.value]?.[this.value] || []);
+});
+
+// ================= WILAYAH =================
+function isiWilayah(el, data, label) {
+  el.innerHTML = `<option value="">-- ${label} --</option>`;
+  data.forEach(d => {
+    el.innerHTML += `<option value="${d.name}" data-id="${d.id}">${d.name}</option>`;
+  });
+}
+
+const provinsi = document.getElementById('provinsi');
+const kabupaten = document.getElementById('kabupaten');
+const kecamatan = document.getElementById('kecamatan');
+
+fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
+  .then(res => res.json())
+  .then(data => isiWilayah(provinsi, data, 'Pilih Provinsi'));
+
+provinsi.onchange = () => {
+  const id = provinsi.selectedOptions[0]?.dataset.id;
+  if (!id) return;
+
+  fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${id}.json`)
+    .then(res => res.json())
+    .then(data => {
+      isiWilayah(kabupaten, data, 'Pilih Kabupaten');
+      kecamatan.innerHTML = '<option>-- pilih kecamatan --</option>';
+    });
+};
+
+kabupaten.onchange = () => {
+  const id = kabupaten.selectedOptions[0]?.dataset.id;
+  if (!id) return;
+
+  fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${id}.json`)
+    .then(res => res.json())
+    .then(data => isiWilayah(kecamatan, data, 'Pilih Kecamatan'));
+};
+
+// ================= SUBMIT =================
+document.getElementById('formAtlet').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = {
+    nama_lengkap: nama.value,
+    tempat_lahir: tempat_lahir.value,
+    tanggal_lahir: tanggal_lahir.value,
+    tinggi: tinggi.value,
+    berat: berat.value,
+    jenis_kelamin: jenis_kelamin.value,
+
+    kategori: eventSelect.value,
+    jenis_tanding: cabang.value,
+    sub_kategori: level.value,
+    kelas: kelas.value,
+
+    provinsi: provinsi.value,
+    kabupaten: kabupaten.value,
+    kecamatan: kecamatan.value,
+
+    no_hp: no_hp.value,
+    pendidikan: pendidikan.value,
+    gol_darah: gol_darah.value,
+    email: email.value,
+    no_hp_ortu: no_hp_ortu.value
+  };
+
+  const res = await fetch('/tambah-atlet', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message);
+
+  if (result.message.includes('berhasil')) {
+    window.location.href = '/dashboard';
+  }
+});
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<h1>🔥 Dashboard 🔥</h1>
+<p id="nama"></p>
+
+<a href="/tambah-atlet.html">Tambah Atlet</a><br><br>
+<a href="/logout">Logout</a>
+
+<script>
+fetch('/me')
+.then(res => res.json())
+.then(d => {
+  if (!d.nama) {
+    location.href = '/login.html';
+  } else {
+    document.getElementById('nama').innerText =
+      'Selamat datang, ' + d.nama;
+  }
+});
+</script>

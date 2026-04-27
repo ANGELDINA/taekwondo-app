@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tambah Dojang</title>
+</head>
+<body>
+
+<h2>Data Dojang</h2>
+
+<form id="formDojang">
+  <input type="text" id="nama_dojang" placeholder="Nama Dojang" required><br><br>
+  <input type="text" id="manager" placeholder="Manager"><br><br>
+  <input type="text" id="official" placeholder="Official"><br><br>
+  <input type="text" id="coach" placeholder="Coach"><br><br>
+
+  <button type="submit">Simpan Dojang</button>
+</form>
+
+<script>
+document.getElementById('formDojang').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = {
+    nama_dojang: nama_dojang.value,
+    manager: manager.value,
+    official: official.value,
+    coach: coach.value
+  };
+
+  const res = await fetch('/tambah-dojang', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message);
+
+  if (result.message.includes('berhasil')) {
+    window.location.href = '/tambah-atlet.html';
+  }
+});
+</script>
+
+</body>
+</html>
