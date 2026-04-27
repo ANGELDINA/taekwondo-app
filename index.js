@@ -19,11 +19,11 @@ app.use(session({
 
 // ================= DATABASE =================
 const db = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'Qwertyuiop', // ✅ benar
-  database: 'taekwondo',
-  port: 3306
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT
 });
 
 // ================= REGISTER =================
@@ -163,6 +163,36 @@ app.post('/tambah-atlet', (req, res) => {
       );
     }
   );
+});
+
+// list atlet
+app.get('/list-atlet', (req, res) => {
+  if (!req.session.user) {
+    return res.json([]);
+  }
+
+  db.query(`
+    SELECT 
+      d.nama_dojang,
+      a.nama_lengkap,
+      a.nik,
+      DATE_FORMAT(a.tanggal_lahir, '%d/%m/%Y') as tanggal_lahir,
+      a.kategori,
+      a.jenis_tanding,
+      a.sub_kategori,
+      a.kelas,
+      a.provinsi,
+      a.kabupaten
+    FROM atlet a
+    JOIN dojang d ON a.dojang_id = d.id
+    WHERE d.user_id = ?
+  `, [req.session.user.id], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.json([]);
+    }
+    res.json(result);
+  });
 });
 
 // GET DATA ATLET
