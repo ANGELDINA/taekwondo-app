@@ -11,8 +11,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+app.set('trust proxy', 1);
+
 app.use(session({
-  secret: 'secret123',
+  secret: process.env.SESSION_SECRET || 'secret123',
   resave: false,
   saveUninitialized: false
 }));
@@ -243,14 +245,8 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// ================= DATABASE CONNECT =================
-db.connect((err) => {
-  if (err) {
-    console.log("❌ DB ERROR:", err);
-  } else {
-    console.log("✅ MySQL Connected");
-  }
-});
+
+
 
 // ================= SERVER =================
 const PORT = process.env.PORT || 3000;
